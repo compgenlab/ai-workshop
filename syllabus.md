@@ -4,7 +4,7 @@ Sep 24, 2026 · @Marcus
 
 ## At a glance
 
-A three-session, hands-on workshop that makes graduate students and early-stage researchers comfortable using AI tools in biomedical research. It is designed for wet-lab researchers and also useful for early-stage dry-lab students; minimal Python is assumed. About two-thirds of each session is hands-on, and one biological thread, p53 and MDM2, runs through all three days.
+A three-session, hands-on workshop that makes graduate students and other learners (postdocs, and clinical residents and fellows on research rotations) comfortable using AI tools in biomedical research. It is designed for wet-lab researchers and also useful for early-stage dry-lab students; minimal Python is assumed. About two-thirds of each session is hands-on, and one biological thread, p53 and MDM2, runs through all three days.
 
 By the end, students can explain how AI fails, verify its output, connect their own data to an LLM, direct a coding agent through a full analysis, and apply rules for appropriate AI use in research.
 
@@ -39,11 +39,11 @@ Detailed schedules, the appropriate-use framework, resources, and the preparatio
 
 ## Course summary
 
-A three-session, hands-on workshop that makes graduate wet-lab students comfortable using AI tools in their own research. About two-thirds of every session is hands-on: students learn comfort by doing.
+A three-session, hands-on workshop that makes graduate students and other learners comfortable using AI tools in their own research. About two-thirds of every session is hands-on: students learn comfort by doing.
 
 |  |  |
 | --- | --- |
-| Audience | Graduate students and early-stage researchers. Designed for wet-lab researchers; also useful for early-stage dry-lab students. Minimal Python, no prior AI/ML experience |
+| Audience | Graduate students and other learners: postdocs, and clinical residents and fellows on research rotations. Designed for wet-lab researchers; also useful for early-stage dry-lab students. Minimal Python, no prior AI/ML experience |
 | Cohort | Planned for 20–25 students per session |
 | Format | 3 sessions × 3.5 hours, one per week on the same weekday over three consecutive weeks; Python in Jupyter notebooks, a personal Open WebUI chat interface, and the hux coding agent |
 | Environment | One Jetstream2 VM per student, kept running for one week after the workshop |
