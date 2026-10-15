@@ -1,0 +1,672 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>AI Tools for Biomedical Researchers: A Hands-On Workshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F4F6F8; --surface:#FFFFFF; --ink:#18212B; --muted:#5A6573; --line:#DCE1E8;
+  --hema:#4638A0;      /* hematoxylin: talk / accent */
+  --eosin:#C23C72;     /* eosin: hands-on */
+  --teal:#1F7F7A;      /* discussion */
+  --brk:#C9D0D8;       /* break */
+  --hema-soft:#ECEAF8; --eosin-soft:#FBE9F0; --teal-soft:#E3F3F1;
+  --code-bg:#EEF0F4;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#12161C; --surface:#1A2029; --ink:#E6EAF0; --muted:#9BA6B4; --line:#2C3542;
+    --hema:#A99CF5; --eosin:#EE7FA9; --teal:#5CC7BF; --brk:#3A4452;
+    --hema-soft:#262346; --eosin-soft:#3A1D2A; --teal-soft:#15312F; --code-bg:#232B36;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#12161C; --surface:#1A2029; --ink:#E6EAF0; --muted:#9BA6B4; --line:#2C3542;
+  --hema:#A99CF5; --eosin:#EE7FA9; --teal:#5CC7BF; --brk:#3A4452;
+  --hema-soft:#262346; --eosin-soft:#3A1D2A; --teal-soft:#15312F; --code-bg:#232B36;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:17px/1.6 var(--body);}
+.wrap{max-width:960px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+h2{font-size:1.55rem;font-weight:700}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0}
+a{color:var(--hema);text-underline-offset:2px}
+code{font-family:var(--mono);font-size:.86em;background:var(--code-bg);padding:.08em .35em;border-radius:4px;overflow-wrap:anywhere}
+.muted{color:var(--muted)}
+.eyebrow{font:500 .74rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* header */
+header.top{padding-block:44px 28px}
+header.top .wrap{display:grid;gap:14px}
+header.top h1{font-size:clamp(2rem,5.2vw,3.2rem);font-weight:700;letter-spacing:-.01em;max-width:22ch}
+header.top .lede{font-size:1.12rem;color:var(--muted);max-width:60ch}
+.facts{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:.95rem;margin-top:4px}
+.facts span b{font-weight:600}
+
+/* tabs */
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--ground);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav.tabs .wrap::-webkit-scrollbar{display:none}
+nav.tabs button{appearance:none;border:0;background:none;color:var(--muted);font:600 1rem var(--body);padding:14px 14px 12px;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;display:flex;gap:8px;align-items:baseline}
+nav.tabs button small{font:500 .72rem var(--mono);letter-spacing:.04em}
+nav.tabs button:hover{color:var(--ink)}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--hema)}
+nav.tabs button:focus-visible{outline:2px solid var(--hema);outline-offset:-2px}
+
+main{padding-block:32px 72px}
+section.panel{display:grid;gap:40px}
+.block{display:grid;gap:14px}
+.block > p, .block > ul, .block > ol{max-width:68ch}
+ul,ol{margin:0;padding-left:1.25em;display:grid;gap:6px}
+
+/* generic table */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:10px 14px;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+th{font:500 .72rem/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--ground)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.key{font-weight:600;white-space:nowrap}
+td.step{font-family:var(--mono);font-size:.85rem;white-space:nowrap;color:var(--hema)}
+
+/* overview */
+.intro{display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:start}
+.intro .thread{background:var(--hema-soft);border-radius:10px;padding:20px;display:grid;gap:10px}
+.thread .genes{font:500 .95rem var(--mono);color:var(--hema)}
+.days{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.daycard{appearance:none;text-align:left;font:inherit;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:10px;align-content:start;cursor:pointer}
+.daycard:hover{border-color:var(--hema)}
+.daycard:focus-visible{outline:2px solid var(--hema);outline-offset:2px}
+.daycard .n{font:700 2.4rem/1 var(--display);color:var(--hema)}
+.daycard h3{font-size:1.08rem}
+.daycard dl{margin:0;display:grid;gap:8px;font-size:.93rem}
+.daycard dt{font:500 .7rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.daycard dd{margin:0}
+.daycard .go{font-size:.9rem;color:var(--hema);font-weight:600}
+.principles{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 28px}
+.principles div{display:grid;gap:4px}
+.principles b{font-family:var(--display);font-size:1.02rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.note{border-left:3px solid var(--eosin);padding:4px 0 4px 16px;max-width:68ch}
+
+/* day header */
+.dayhead{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:end}
+.dayhead .n{grid-row:span 2;font:700 clamp(3.6rem,10vw,5.4rem)/.85 var(--display);color:var(--hema)}
+.dayhead h2{font-size:clamp(1.5rem,3.6vw,2.1rem)}
+.dayhead p{grid-column:1/-1;max-width:68ch;margin-top:10px}
+.bring{display:flex;gap:10px;align-items:baseline;background:var(--eosin-soft);border-radius:8px;padding:12px 16px;max-width:68ch}
+.bring .eyebrow{color:var(--eosin);white-space:nowrap}
+
+/* timeline */
+.timeline{display:grid;gap:10px}
+.tl-bar{display:flex;height:46px;border-radius:6px;overflow:hidden;gap:2px;background:var(--ground)}
+.tl-seg{min-width:0;display:flex;align-items:center;justify-content:center;font:500 .7rem/1.1 var(--mono);color:#fff;padding:0 3px;text-align:center;overflow:hidden}
+.tl-seg span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.m-talk{background:var(--hema)} .m-hands{background:var(--eosin)} .m-disc{background:var(--teal)}
+.m-break{background:repeating-linear-gradient(45deg,var(--brk) 0 5px,transparent 5px 9px);color:var(--muted)}
+:root[data-theme="dark"] .tl-seg:not(.m-break){color:#12161C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tl-seg:not(.m-break){color:#12161C}}
+.tl-axis{position:relative;height:16px;font:400 .72rem var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.tl-axis span{position:absolute;transform:translateX(-50%)}
+.tl-axis span:first-child{transform:none}
+.tl-axis span:last-child{transform:translateX(-100%)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.88rem;color:var(--muted);align-items:center}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.legend .share{margin-left:auto;color:var(--ink);font-weight:600}
+
+.sched td.clock{font-family:var(--mono);font-size:.86rem;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--muted)}
+.chip{display:inline-block;font:500 .72rem/1 var(--mono);letter-spacing:.03em;padding:5px 8px;border-radius:999px;white-space:nowrap}
+.c-talk{background:var(--hema-soft);color:var(--hema)} .c-hands{background:var(--eosin-soft);color:var(--eosin)}
+.c-disc{background:var(--teal-soft);color:var(--teal)} .c-break{background:var(--ground);color:var(--muted);border:1px solid var(--line)}
+
+.sess{display:grid;gap:12px;padding-top:26px;border-top:1px solid var(--line)}
+.sess-h{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.sess-h .clock{font:500 .82rem var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.sess > p,.sess > ul{max-width:68ch}
+.aside{font-size:.95rem;color:var(--muted);max-width:68ch}
+.aside b{color:var(--ink);font-weight:600}
+details.handout{border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+details.handout summary{cursor:pointer;padding:14px 18px;font-weight:600}
+details.handout summary:focus-visible{outline:2px solid var(--hema);outline-offset:2px}
+details.handout .inner{padding:0 18px 18px;display:grid;gap:12px}
+details.handout .tbl{border-radius:6px}
+
+footer{border-top:1px solid var(--line);padding-block:20px 36px;font-size:.88rem;color:var(--muted)}
+
+@media (max-width:760px){
+  .intro,.two{grid-template-columns:1fr}
+  .days{grid-template-columns:1fr}
+  .principles{grid-template-columns:1fr}
+  .tl-seg span{display:none}
+  .legend .share{margin-left:0;width:100%}
+}
+@media (prefers-reduced-motion:no-preference){
+  section.panel{animation:rise .25s ease-out}
+  @keyframes rise{from{transform:translateY(6px)}to{transform:none}}
+}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <span class="eyebrow">Hands-on workshop · Indiana University School of Medicine</span>
+    <h1>AI Tools for Biomedical Researchers: A Hands-On Workshop</h1>
+    <p class="lede">Three weekly sessions that make graduate students and early-stage researchers comfortable using AI in their own research: how it works, how it fails, and how to put it to work on real data.</p>
+    <div class="facts">
+      <span><b>3 weekly sessions</b> × 3.5 hours</span>
+      <span><b>Dates:</b> to be announced (same weekday, three consecutive weeks)</span>
+      <span><b>Instructor:</b> Marcus R. Breese, PhD</span>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Workshop sections">
+  <div class="wrap" role="tablist">
+    <button role="tab" id="tab-overview" aria-controls="p-overview" aria-selected="true">Overview</button>
+    <button role="tab" id="tab-day1" aria-controls="p-day1" aria-selected="false">Day 1 <small>How AI works</small></button>
+    <button role="tab" id="tab-day2" aria-controls="p-day2" aria-selected="false">Day 2 <small>Your data + LLMs</small></button>
+    <button role="tab" id="tab-day3" aria-controls="p-day3" aria-selected="false">Day 3 <small>AI-assisted coding</small></button>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+
+<!-- ============ OVERVIEW ============ -->
+<section class="panel" id="p-overview" role="tabpanel" aria-labelledby="tab-overview">
+
+  <div class="intro">
+    <div class="block">
+      <h2>About the workshop</h2>
+      <p>This workshop is designed for wet-lab researchers and is also useful for early-stage dry-lab students. You need very little Python and no prior AI or machine-learning experience. About two-thirds of every session is hands-on: you get comfortable by doing.</p>
+      <p>By the end, you can explain how AI fails, verify its output, connect your own data to an LLM, direct a coding agent through a full analysis, and apply rules for appropriate AI use in research.</p>
+    </div>
+    <aside class="thread">
+      <span class="eyebrow">One biological thread, three days</span>
+      <p class="genes">TP53 · MDM2 · nutlin</p>
+      <p>Day 1 predicts TP53 status from gene expression. Day 2 serves cell-line and literature data about p53 to an LLM. Day 3 analyzes the transcriptional response to nutlin, an MDM2 inhibitor, in TP53 wild-type vs. knockout cells.</p>
+    </aside>
+  </div>
+
+  <div class="block">
+    <h2>The three days</h2>
+    <div class="days">
+      <button class="daycard" data-go="p-day1">
+        <span class="n">1</span>
+        <h3>How AI Works (and Where It Breaks)</h3>
+        <dl><dt>You build</dt><dd>A TP53-status classifier; a traced agent run</dd>
+        <dt>You leave with</dt><dd>An intuition for how AI fails, and a habit of verifying</dd></dl>
+        <span class="go">Day 1 schedule →</span>
+      </button>
+      <button class="daycard" data-go="p-day2">
+        <span class="n">2</span>
+        <h3>Making Your Data Available to an LLM</h3>
+        <dl><dt>You build</dt><dd>A hybrid retrieval index and an MCP server, connected to your own chat interface</dd>
+        <dt>You leave with</dt><dd>Your own data and tools inside a working chat app</dd></dl>
+        <span class="go">Day 2 schedule →</span>
+      </button>
+      <button class="daycard" data-go="p-day3">
+        <span class="n">3</span>
+        <h3>AI-Assisted Coding for Bench Scientists</h3>
+        <dl><dt>You build</dt><dd>A full bulk RNA-seq analysis, directed through the hux coding agent</dd>
+        <dt>You leave with</dt><dd>A plan template, review checklist, reproducible notebook, and AI-use disclosure</dd></dl>
+        <span class="go">Day 3 schedule →</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="block">
+    <h2>Learning outcomes</h2>
+    <p>By the end of the workshop, you can:</p>
+    <ol>
+      <li>Explain how classifiers and LLMs learn from examples, and predict where each one fails.</li>
+      <li>Recognize and verify common LLM failures: fabricated citations, confident errors, and tokenization blind spots.</li>
+      <li>Make your own data available to an LLM by building a retrieval index and an MCP server, and choose between prompt stuffing, retrieval, and tools.</li>
+      <li>Direct a coding agent through a complete RNA-seq analysis from a written plan with pre-registered checks, and catch the errors the agent misses.</li>
+      <li>Apply a framework for appropriate AI use in research, and write an AI-use disclosure.</li>
+    </ol>
+  </div>
+
+  <div class="block">
+    <h2>How the sessions run</h2>
+    <div class="principles">
+      <div><b>Do first, explain second.</b><span>Each day opens with a hands-on task; the lecture explains what you just saw.</span></div>
+      <div><b>Use the tools, build the data side.</b><span>You use provided AI interfaces and build only the pieces that connect your data: a classifier, a retrieval index, an MCP server.</span></div>
+      <div><b>Bring your own.</b><span>Each day ends with you applying that day's tools to your own research.</span></div>
+      <div><b>Public data only.</b><span>All workshop data is public; sensitive data stays in IU-approved tools.</span></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="block">
+      <h2>Before you come</h2>
+      <ul>
+        <li>A laptop with a modern browser. Nothing is installed locally; everything runs on your personal VM.</li>
+        <li>Enough Python to run a notebook cell and edit one line.</li>
+        <li>Complete a short survey: Python comfort, and whether you work with bulk or single-cell RNA-seq.</li>
+        <li>That's all. You get your login on a printed card at the start of Day 1.</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h2>What to bring</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Day</th><th>Bring</th></tr></thead>
+        <tbody>
+          <tr><td class="key">1</td><td>A question from your own research to ask an AI</td></tr>
+          <tr><td class="key">2</td><td>A CSV from your lab (sample inventory, plate layout, reagent list); public or non-sensitive only. A fallback CSV is provided</td></tr>
+          <tr><td class="key">3</td><td>An upcoming experiment you want to plan an analysis for</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h2>Your computing environment</h2>
+    <p>Each student gets a personal Jetstream2 VM at <code>vmN.class.compgenlab.org</code> and logs in as <code>studentN@class.compgenlab.org</code> with the password on your card.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Component</th><th>Used on</th><th>What it's for</th></tr></thead>
+      <tbody>
+        <tr><td class="key">JupyterLab</td><td>Days 1–3</td><td>Notebooks and terminal</td></tr>
+        <tr><td class="key">Open WebUI</td><td>Days 1–2</td><td>Your chat interface. You are its admin, so you can connect your own MCP servers</td></tr>
+        <tr><td class="key">Your MCP server</td><td>Days 2–3</td><td>Your own tools: cell-line lookups and literature search, run from the command line</td></tr>
+        <tr><td class="key">hux coding agent</td><td>Day 3</td><td>Directed analysis in a container</td></tr>
+        <tr><td class="key">Workshop model</td><td>Days 1–3</td><td>The Jetstream-hosted LLM behind every interface</td></tr>
+        <tr><td class="key">Workshop webapp</td><td>Days 1–3</td><td>Live polls, charts, and anonymous votes</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="block">
+    <h2>Policies</h2>
+    <ul>
+      <li><b>Public data only.</b> Jetstream2 does not permit data protected by law (HIPAA, FERPA and similar). Use IU's REALLMS for anything sensitive.</li>
+      <li><b>VM lifetime.</b> Your VM stays up from Day 1 until one week after Day 3, then is deleted. Export anything you want to keep: notebooks, server code, and chat exports.</li>
+      <li><b>Anonymous polling.</b> All in-class votes and submissions are anonymous.</li>
+      <li><b>Appropriate AI use.</b> The framework taught on Day 3 applies to all workshop work.</li>
+    </ul>
+    <p class="note">The rule behind the framework: AI can do the work, but you stay accountable for every result, citation, and word, and you disclose how you used it.</p>
+  </div>
+
+  <div class="block">
+    <h2>Data and references</h2>
+    <ul>
+      <li>Day 1: <a href="https://depmap.org/portal/" target="_blank" rel="noopener">DepMap</a> cancer cell-line expression and TP53 status (CC BY 4.0)</li>
+      <li>Day 3: <a href="https://www.omicsdi.org/dataset/geo/GSE86221" target="_blank" rel="noopener">GSE86221</a>, HCT116 TP53 wild-type vs. knockout, DMSO vs. nutlin</li>
+      <li>Day 3 extension: <a href="https://pertpy.readthedocs.io/en/latest/api/data/pertpy.data.mcfarland_2020.html" target="_blank" rel="noopener">MIX-seq idasanutlin single-cell data via pertpy</a></li>
+      <li><a href="https://docs.openwebui.com/features/extensibility/mcp/" target="_blank" rel="noopener">Open WebUI: Model Context Protocol</a></li>
+      <li><a href="https://www.grants.nih.gov/grants/guide/notice-files/NOT-OD-25-132.html" target="_blank" rel="noopener">NIH NOT-OD-25-132</a> on AI in grant applications</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ DAY 1 ============ -->
+<section class="panel" id="p-day1" role="tabpanel" aria-labelledby="tab-day1" hidden>
+  <div class="dayhead">
+    <span class="n">1</span>
+    <span class="eyebrow">Day 1</span>
+    <h2>How AI Works (and Where It Breaks)</h2>
+    <p>You build a classifier, watch an LLM sample and an agent loop run, and measure where both fail.</p>
+  </div>
+  <div class="bring"><span class="eyebrow">Bring</span><span>A question from your own research to ask an AI</span></div>
+
+  <div class="timeline" data-day="1"></div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">0:00</span><h3>Welcome</h3><span class="chip c-talk">5 min · talk</span></div>
+    <p>The workshop goal, and the p53/MDM2 thread that runs through all three days.</p>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">0:05</span><h3>Setup and warm-up</h3><span class="chip c-hands">15 min · hands-on</span></div>
+    <ul>
+      <li>Log in to JupyterLab and Open WebUI with your credentials card. TAs fix problems on the spot.</li>
+      <li>In Open WebUI, ask a question from your own research and read the answer.</li>
+      <li>Mark one factual claim in the answer. You will verify it at the end of the day.</li>
+      <li>Optional (2 min): vote on 10 appropriate-use scenarios. We compare with your Day 3 vote.</li>
+    </ul>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">0:20</span><h3>Lecture</h3><span class="chip c-talk">35 min · talk</span></div>
+    <p>Each segment starts from something you saw in the warm-up.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Segment</th><th class="num">Min</th><th>Content</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Two kinds of AI</td><td class="num">4</td><td>Learning from examples; discriminative vs. generative models</td></tr>
+        <tr><td class="key">Classifiers</td><td class="num">10</td><td>Features, labels, train/test split, overfitting, confusion matrix, ROC</td></tr>
+        <tr><td class="key">Neural networks</td><td class="num">3</td><td>Intuition only: stacked learned features</td></tr>
+        <tr><td class="key">How LLMs work</td><td class="num">10</td><td>Tokens; the next-token distribution; predict → sample → append; temperature; context windows. Same training recipe as a classifier with a different target; the loop makes it generative</td></tr>
+        <tr><td class="key">Where it breaks</td><td class="num">4</td><td>Forced choice (always an answer, never "I don't know"); hallucination; tokenization blind spots</td></tr>
+        <tr><td class="key">Agents</td><td class="num">4</td><td>Agent = LLM + tools + loop; the harness is the loop</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">0:55</span><h3>Lab A: Predict TP53 status from expression</h3><span class="chip c-hands">55 min · solo</span></div>
+    <p>Data: a DepMap subset of cancer cell lines with expression, TP53 status, and lineage, in two versions: a panel of ~15 canonical p53 targets (CDKN1A, MDM2, BAX, BBC3, GDF15, SESN1, RRM2B, TP53I3, ZMAT3, TNFRSF10B, DDB2, PHLDA3 and others) and all genes.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Step</th><th class="num">Min</th><th>Task</th></tr></thead>
+      <tbody>
+        <tr><td class="step">A1</td><td class="num">10</td><td>Explore: class balance; CDKN1A expression by TP53 status</td></tr>
+        <tr><td class="step">A2</td><td class="num">15</td><td>Logistic regression on the panel: confusion matrix, ROC, coefficients</td></tr>
+        <tr><td class="step">A3</td><td class="num">25</td><td>Break it: all genes vs. panel (overfitting); feature selection before the split (leakage); train on 3 lineages and test on the rest (confounding)</td></tr>
+        <tr><td class="step">A4</td><td class="num">5</td><td>Write two sentences: what did the model learn, and how do you know?</td></tr>
+      </tbody>
+    </table></div>
+    <p class="aside"><b>Stretch:</b> random forest vs. logistic regression. <b>Fell behind?</b> A checkpoint file with a fitted model lets you continue from A3.</p>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">2:00</span><h3>Lab B: Inside an LLM and the agent loop</h3><span class="chip c-hands">50 min · follow-along, then solo</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Step</th><th>Mode</th><th class="num">Min</th><th>Content</th></tr></thead>
+      <tbody>
+        <tr><td class="step">B1</td><td>Follow-along</td><td class="num">10</td><td>In the notebook, print next-token probabilities for "Name one p53 target gene. Answer with the gene symbol only." Sample ~5 answers at T = 0, 0.7 and 1.2 and submit them; the webapp charts the room's answers live beside the model's probabilities</td></tr>
+        <tr><td class="step">B2</td><td>Instructor-led</td><td class="num">12</td><td>Walk through one agent trace in Open WebUI: question → decision → tool call → result → answer. Then ask your own question with code interpreter on and label each step of your trace</td></tr>
+        <tr><td class="step">B3</td><td>Solo</td><td class="num">13</td><td>Ask "What is the TP53 status of SJSA-1?" with no tools, then with the reference cell-line server enabled. Compare the answers and the traces</td></tr>
+        <tr><td class="step">B4</td><td>Solo</td><td class="num">15</td><td>Probes: count the Gs in a TP53 exon with and without code interpreter. Ask for 3 PMIDs on p53–MDM2 with no tools, look each up in PubMed, classify it (fabricated / real but unrelated / supporting), and submit to the webapp</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">2:50</span><h3>Bring your own</h3><span class="chip c-hands">10 min · solo</span></div>
+    <p>Verify the claim you marked in the warm-up. Then re-ask your question, requiring citations or with code interpreter on. Did the answer improve, and can you verify it?</p>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">3:00</span><h3>Debrief</h3><span class="chip c-disc">20 min · discussion</span></div>
+    <p>Compare how the classifier and the LLM failed. Each student names one failure they found.</p>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">3:20</span><h3>Bridge to Day 2</h3><span class="chip c-talk">10 min</span></div>
+    <ul>
+      <li>See the room's PMID results.</li>
+      <li>Next week the agent can search the literature. Submit your prediction for how many citations it will fabricate.</li>
+      <li>Bring a CSV from your lab. One-minute feedback card.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ DAY 2 ============ -->
+<section class="panel" id="p-day2" role="tabpanel" aria-labelledby="tab-day2" hidden>
+  <div class="dayhead">
+    <span class="n">2</span>
+    <span class="eyebrow">Day 2</span>
+    <h2>Making Your Data Available to an LLM</h2>
+    <p>You build the data side, a hybrid retrieval index and an MCP server, and connect it to your own Open WebUI. Then you measure prompt stuffing, retrieval, and tools on the same questions.</p>
+  </div>
+  <div class="bring"><span class="eyebrow">Bring</span><span>A CSV from your lab (sample inventory, plate layout, reagent list); public or non-sensitive only. A fallback plate-layout CSV is provided</span></div>
+
+  <div class="timeline" data-day="2"></div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">0:00</span><h3>Opening</h3><span class="chip c-hands">15 min · hands-on</span></div>
+    <ul>
+      <li>In Open WebUI, ask: "What is the TP53 status of SJSA-1, and how many osteosarcoma lines are TP53 wild-type?" Watch what the model does without your data. That is the problem today solves.</li>
+      <li>See the Day 1 PMID chart beside the class's predictions for today. We come back to it once retrieval is connected.</li>
+    </ul>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">0:15</span><h3>Lecture</h3><span class="chip c-talk">30 min · talk</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Segment</th><th class="num">Min</th><th>Content</th></tr></thead>
+      <tbody>
+        <tr><td class="key">The problem</td><td class="num">3</td><td>The model knows only its training data and its context window</td></tr>
+        <tr><td class="key">Stuffing</td><td class="num">4</td><td>Paste data into the prompt: simple, but limited by context length, and recall degrades as it grows</td></tr>
+        <tr><td class="key">Retrieval (RAG)</td><td class="num">9</td><td>Embeddings are learned features, like Day 1's classifier inputs. Chunk → embed → retrieve → answer. Embeddings handle paraphrase; keyword search handles exact identifiers; hybrid combines both. Good for citations, bad for counting</td></tr>
+        <tr><td class="key">Tools and MCP</td><td class="num">8</td><td>A tool is a function; MCP is a standard way to serve tools to any client (host, client, server, transports)</td></tr>
+        <tr><td class="key">Where your data goes</td><td class="num">3</td><td>Your VM and the workshop model vs. commercial connectors; the server is the policy boundary</td></tr>
+        <tr><td class="key">Injection</td><td class="num">3</td><td>Retrieved text and tool output become model input, so a document can carry instructions</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">0:45</span><h3>Lab A: Build a retrieval index</h3><span class="chip c-hands">55 min · mixed</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Step</th><th>Mode</th><th class="num">Min</th><th>Content</th></tr></thead>
+      <tbody>
+        <tr><td class="step">A1</td><td>Solo</td><td class="num">10</td><td>Stuffing: paste 100, 1,000, and all rows of the cell-line table into Open WebUI; ask 4 lookups at each size and record accuracy</td></tr>
+        <tr><td class="step">A2</td><td>Follow-along</td><td class="num">20</td><td>In the notebook, build two indexes over ~300 p53/MDM2 abstracts: embeddings (numpy + a small embedding model) and keyword search (BM25). Search both; save to disk</td></tr>
+        <tr><td class="step">A3</td><td>Solo</td><td class="num">15</td><td>Query an exact identifier (a gene symbol such as PHLDA3, or a cell line such as SJSA-1) and compare what each index returns. Then combine the scores into a hybrid search</td></tr>
+        <tr><td class="step">A4</td><td>Solo</td><td class="num">10</td><td>Catch up, or stretch: change the chunk size and compare</td></tr>
+      </tbody>
+    </table></div>
+    <p class="aside"><b>Fell behind?</b> Prebuilt index files are available. <b>Stretch:</b> upload the same abstracts to Open WebUI's built-in Knowledge feature and compare its retrieval with yours.</p>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">1:50</span><h3>Lab B: Build and connect an MCP server</h3><span class="chip c-hands">60 min · mixed</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Step</th><th>Mode</th><th class="num">Min</th><th>Content</th></tr></thead>
+      <tbody>
+        <tr><td class="step">B1</td><td>Follow-along</td><td class="num">15</td><td>Write a FastMCP server with <code>lookup_cell_line</code> (Day 1's tool) and <code>search_literature</code> (your hybrid search). Start it in a JupyterLab terminal with <code>python server.py</code></td></tr>
+        <tr><td class="step">B2</td><td>Solo</td><td class="num">10</td><td>Add <code>count_cell_lines(filter)</code>; stop the server (Ctrl-C) and start it again</td></tr>
+        <tr><td class="step">B3</td><td>Follow-along</td><td class="num">10</td><td>In Open WebUI: Settings → Admin → Integrations → External Tool Servers → add MCP (Streamable HTTP) with your server URL and auth None. Add paperKB the same way. Enable both in a chat</td></tr>
+        <tr><td class="step">B4</td><td>Solo</td><td class="num">25</td><td>Score 6 questions by hand under stuffing, retrieval only, and all tools, and submit to the webapp. Rerun the Day 1 PMID question for the before/after chart. Injection probe: check whether a document in the corpus can steer the agent</td></tr>
+      </tbody>
+    </table></div>
+    <p class="aside"><b>Question set:</b> 2 lookups, 2 aggregates, 1 literature question, and 1 that only paperKB can answer. <b>Fell behind?</b> A known-good server file is available.</p>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">2:50</span><h3>Bring your own</h3><span class="chip c-hands">10 min · solo</span></div>
+    <p>Add one tool that reads the CSV from your lab, restart the server in its terminal, and ask about your data in Open WebUI.</p>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">3:00</span><h3>Debrief</h3><span class="chip c-disc">20 min · discussion</span></div>
+    <ul>
+      <li>The room's accuracy matrix: which method won on which kind of question, and why.</li>
+      <li>The PMID chart, before and after retrieval.</li>
+      <li>Injection results: who was affected, and through which method.</li>
+      <li>Where to go next: biomedical embedding models (e.g., MedCPT), and paperKB as the production version of what you built.</li>
+    </ul>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">3:20</span><h3>Bridge to Day 3</h3><span class="chip c-talk">10 min</span></div>
+    <ul>
+      <li>Next week: a full RNA-seq analysis of nutlin vs. DMSO in TP53 wild-type vs. knockout cells.</li>
+      <li>Pre-register 3 genes you expect to rise in wild-type but not knockout cells, and submit them to the webapp.</li>
+      <li>Leave your server running in its JupyterLab terminal, or start it again at the beginning of Day 3. Feedback card.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ DAY 3 ============ -->
+<section class="panel" id="p-day3" role="tabpanel" aria-labelledby="tab-day3" hidden>
+  <div class="dayhead">
+    <span class="n">3</span>
+    <span class="eyebrow">Day 3</span>
+    <h2>AI-Assisted Coding for Bench Scientists</h2>
+    <p>You direct a coding agent through a full bulk RNA-seq analysis. You own the plan and the verification; the agent writes the code.</p>
+  </div>
+  <div class="bring"><span class="eyebrow">Bring</span><span>An upcoming experiment you want to plan an analysis for</span></div>
+  <p class="aside"><b>Dataset:</b> <a href="https://www.omicsdi.org/dataset/geo/GSE86221" target="_blank" rel="noopener">GSE86221</a>, HCT116 TP53 wild-type vs. knockout, each treated with DMSO or nutlin (a 2×2 design). Gene-level counts are provided; no alignment in class.</p>
+
+  <div class="timeline" data-day="3"></div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">0:00</span><h3>Opening</h3><span class="chip c-hands">20 min · hands-on</span></div>
+    <ul>
+      <li><b>Terminal orientation (10 min):</b> open a terminal in JupyterLab and start your Day 2 server if it isn't running; open a second terminal and start hux; where files live; how to stop the agent.</li>
+      <li><b>An unplanned request (10 min):</b> type "Analyze the RNA-seq data in <code>data/</code>" and watch what the agent does. Save the output for the debrief.</li>
+    </ul>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">0:20</span><h3>Lecture</h3><span class="chip c-talk">30 min · talk</span></div>
+    <p><b>Other AI use cases in biology</b> (20 min)</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Segment</th><th class="num">Min</th><th>Content</th><th>p53 tie-in</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Image classification</td><td class="num">5</td><td>Dog vs. cat → tumor vs. normal → microscopy; Cellpose as a tool to use next week; shortcut learning</td><td>p53 IHC scoring</td></tr>
+        <tr><td class="key">Protein models</td><td class="num">5</td><td>ESM-2 (embeddings for classifiers, zero-shot variant scoring); AlphaFold 2/3</td><td>TP53 hotspots; the MDM2–nutlin pocket</td></tr>
+        <tr><td class="key">Genome models</td><td class="num">5</td><td>DNA language models (Evo 2) vs. sequence-to-function models (AlphaGenome)</td><td>p53 response elements; MDM2 SNP309</td></tr>
+        <tr><td class="key">Evaluating any AI tool</td><td class="num">5</td><td>Training data? Beats a simple baseline on data like mine? How does it fail? Can I use it? How would I verify it?</td><td>—</td></tr>
+      </tbody>
+    </table></div>
+    <p><b>Plan → implement → verify</b> (10 min): you own the question, the checks, and the conclusions; the agent owns the typing. A plan includes pre-registered known answers.</p>
+    <p class="aside"><b>Where agents are heading:</b> skills (packaged instructions and scripts an agent loads when a task calls for them, such as "run differential expression the way our lab does it") and multi-agent workflows (one agent plans, one writes code, one reviews). More autonomy means more places for errors to compound, so a written plan with checks matters more.</p>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">0:50</span><h3>Lab part 1: plan, critique, QC</h3><span class="chip c-hands">50 min · solo</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Step</th><th class="num">Min</th><th>Content</th></tr></thead>
+      <tbody>
+        <tr><td class="step">L1</td><td class="num">20</td><td>Write the plan, no AI. Template: question, comparisons, known-answer checks (CDKN1A and MDM2 rise with nutlin in wild-type, not knockout; replicates cluster by condition; Hallmark p53 pathway enriched in wild-type only; your Day 2 predictions), figures</td></tr>
+        <tr><td class="step">L2</td><td class="num">10</td><td>hux critiques your plan; revise it</td></tr>
+        <tr><td class="step">L3</td><td class="num">20</td><td>QC with hux: library sizes, sample correlation, PCA. Check the results against your plan before moving on</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">1:50</span><h3>Lab part 2: DE, figures, enrichment, report</h3><span class="chip c-hands">55 min · solo</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Step</th><th class="num">Min</th><th>Content</th></tr></thead>
+      <tbody>
+        <tr><td class="step">L4</td><td class="num">15</td><td>Differential expression with PyDESeq2: nutlin vs. DMSO within each genotype, plus the interaction. Check the known answers</td></tr>
+        <tr><td class="step">L5</td><td class="num">10</td><td>Figures: volcano plots, top-gene heatmap, known-target plots</td></tr>
+        <tr><td class="step">L6</td><td class="num">10</td><td>Enrichment: gseapy prerank against offline Hallmark gene sets</td></tr>
+        <tr><td class="step">L7</td><td class="num">10</td><td>Literature check in Open WebUI (your Day 2 server + paperKB): are the top wild-type-specific genes outside the Hallmark set known p53 targets? See your Day 2 predictions vs. the actual results</td></tr>
+        <tr><td class="step">L8</td><td class="num">10</td><td>Report: a notebook that reruns end to end. You write the methods and conclusions; hux checks the methods against the code (parameters, versions, filters) and flags discrepancies</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><b>Rule for the whole lab:</b> read each step's output and run its check before moving on. Checkpoint files are available after every step.</p>
+    <p class="aside"><b>Extension track</b> (fast finishers and the week after): the <a href="https://pertpy.readthedocs.io/en/latest/api/data/pertpy.data.mcfarland_2020.html" target="_blank" rel="noopener">MIX-seq</a> idasanutlin single-cell data, 24 cell lines with known TP53 status. Your plan must pre-register pseudobulk DE by cell line; if the agent tests on individual cells, stop.</p>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">2:45</span><h3>Bring your own</h3><span class="chip c-hands">10 min · solo</span></div>
+    <p>Draft an analysis plan for your own next experiment with the same template, and have hux critique it.</p>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">2:55</span><h3>Debrief</h3><span class="chip c-disc">10 min · discussion</span></div>
+    <p>Compare your planned analysis with the unplanned request from the opening: what did each catch, and who caught it (a plan check, you, or the agent)? You take home the code-review checklist.</p>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">3:05</span><h3>Appropriate use of AI in research</h3><span class="chip c-disc">20 min · interactive</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Part</th><th class="num">Min</th><th>Content</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Gray areas</td><td class="num">2</td><td>Anonymously submit a situation from your own lab where you weren't sure AI use was OK</td></tr>
+        <tr><td class="key">Scenario vote</td><td class="num">10</td><td>Vote on 10 scenarios (OK / OK with conditions / Not OK); see the room's split, discuss, re-vote on the two hardest</td></tr>
+        <tr><td class="key">Framework</td><td class="num">3</td><td>The one-page handout</td></tr>
+        <tr><td class="key">Disclosure</td><td class="num">5</td><td>Draft an AI-use statement for your Day 3 analysis</td></tr>
+      </tbody>
+    </table></div>
+    <details class="handout">
+      <summary>Framework handout (open after the vote)</summary>
+      <div class="inner">
+        <p>AI can do the work, but you stay accountable for every result, citation, and word, and you disclose how you used it.</p>
+        <div class="tbl"><table>
+          <thead><tr><th>Use</th><th>Status</th><th>Condition</th></tr></thead>
+          <tbody>
+            <tr><td class="key">Coding</td><td><span class="chip c-disc">OK</span></td><td>You review it, test it, and can explain it</td></tr>
+            <tr><td class="key">Orchestrating analysis</td><td><span class="chip c-disc">OK</span></td><td>You own the plan and the checks; keep agent logs as provenance; no silent exclusions</td></tr>
+            <tr><td class="key">Literature search and summary</td><td><span class="chip c-disc">OK</span></td><td>Read and verify every citation before using it</td></tr>
+            <tr><td class="key">Writing</td><td><span class="chip c-talk">Editing only</span></td><td>The ideas and drafts are yours; AI polishes; disclose per journal policy</td></tr>
+            <tr><td class="key">Data</td><td><span class="chip c-talk">Analysis only</span></td><td>Never generate, impute, or alter data presented as measured; no AI-generated images of results</td></tr>
+            <tr><td class="key">Sensitive data</td><td><span class="chip c-talk">Approved tools only</span></td><td>PHI and unpublished data go to IU-approved tools such as REALLMS, not Jetstream2 or commercial chatbots</td></tr>
+            <tr><td class="key">Peer review</td><td><span class="chip c-hands">Not OK</span></td><td>Manuscripts and grants under review are confidential</td></tr>
+            <tr><td class="key">Grant applications</td><td><span class="chip c-talk">Editing only</span></td><td>NIH will not consider applications substantially developed by AI to be the applicant's original ideas (<a href="https://www.grants.nih.gov/grants/guide/notice-files/NOT-OD-25-132.html" target="_blank" rel="noopener">NOT-OD-25-132</a>)</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="sess">
+    <div class="sess-h"><span class="clock">3:25</span><h3>Workshop close</h3><span class="chip c-talk">5 min</span></div>
+    <p>Your VM stays up for one week. Public data only; REALLMS for anything sensitive. You keep your notebooks, server code, chat exports, the plan template, the code-review checklist, and your disclosure. Final survey.</p>
+  </div>
+</section>
+
+</div>
+</main>
+
+<footer><div class="wrap">AI Tools for Biomedical Researchers: A Hands-On Workshop · Department of Medical and Molecular Genetics, Indiana University School of Medicine</div></footer>
+
+<script>
+(function(){
+  // mode: talk | hands | disc | break
+  var DAYS = {
+    1: [["Welcome",5,"talk"],["Warm-up",15,"hands"],["Lecture",35,"talk"],["Lab A: classifier",55,"hands"],["Break",10,"break"],["Lab B: LLM + agent loop",50,"hands"],["BYO",10,"hands"],["Debrief",20,"disc"],["Bridge",10,"talk"]],
+    2: [["Opening",15,"hands"],["Lecture",30,"talk"],["Lab A: retrieval index",55,"hands"],["Break",10,"break"],["Lab B: MCP server",60,"hands"],["BYO",10,"hands"],["Debrief",20,"disc"],["Bridge",10,"talk"]],
+    3: [["Opening: hux",20,"hands"],["Lecture",30,"talk"],["Lab 1: plan, QC",50,"hands"],["Break",10,"break"],["Lab 2: DE → report",55,"hands"],["BYO",10,"hands"],["Debrief",10,"disc"],["Appropriate use",20,"disc"],["Close",5,"talk"]]
+  };
+  function clock(m){return Math.floor(m/60)+":"+String(m%60).padStart(2,"0");}
+  document.querySelectorAll(".timeline").forEach(function(el){
+    var d = DAYS[el.dataset.day], total = 0, hands = 0;
+    d.forEach(function(b){ total += b[1]; if(b[2]==="hands") hands += b[1]; });
+    var bar = document.createElement("div"); bar.className = "tl-bar"; bar.setAttribute("role","img");
+    var t = 0, desc = [];
+    d.forEach(function(b){
+      var s = document.createElement("div");
+      s.className = "tl-seg m-" + b[2]; s.style.flex = b[1] + " 1 0";
+      s.title = clock(t) + " · " + b[0] + " · " + b[1] + " min";
+      var sp = document.createElement("span"); sp.textContent = b[1] >= 15 ? b[0] : "";
+      s.appendChild(sp); bar.appendChild(s);
+      desc.push(clock(t) + " " + b[0] + " (" + b[1] + " min)"); t += b[1];
+    });
+    bar.setAttribute("aria-label", "Session timeline: " + desc.join(", "));
+    var axis = document.createElement("div"); axis.className = "tl-axis"; axis.setAttribute("aria-hidden","true");
+    [0,30,60,90,120,150,180,210].forEach(function(m){
+      var s = document.createElement("span"); s.style.left = (m/total*100) + "%"; s.textContent = clock(m); axis.appendChild(s);
+    });
+    var lg = document.createElement("div"); lg.className = "legend";
+    lg.innerHTML = '<span><i class="m-hands"></i>Hands-on</span><span><i class="m-talk"></i>Talk</span><span><i class="m-disc"></i>Discussion</span><span><i class="m-break"></i>Break</span>' +
+      '<span class="share">' + Math.round(hands/total*100) + '% hands-on · ' + clock(total) + ' total</span>';
+    el.appendChild(bar); el.appendChild(axis); el.appendChild(lg);
+  });
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  var ids = tabs.map(function(b){return b.getAttribute("aria-controls");});
+  function show(id, focus){
+    if(ids.indexOf(id) < 0) id = "p-" + id;
+    if(ids.indexOf(id) < 0) id = "p-overview";
+    tabs.forEach(function(b){
+      var on = b.getAttribute("aria-controls") === id;
+      b.setAttribute("aria-selected", on ? "true" : "false");
+      b.tabIndex = on ? 0 : -1;
+      document.getElementById(b.getAttribute("aria-controls")).hidden = !on;
+      if(on && focus) b.focus();
+    });
+    var h = id.slice(2);
+    try{ localStorage.setItem("workshop-tab", h); }catch(e){}
+    if(location.hash.slice(1) !== h){ try{ history.replaceState(null, "", "#" + h); }catch(e){} }
+  }
+  tabs.forEach(function(b, i){
+    b.addEventListener("click", function(){ show(b.getAttribute("aria-controls")); window.scrollTo({top:0}); });
+    b.addEventListener("keydown", function(e){
+      var j = e.key === "ArrowRight" ? i+1 : e.key === "ArrowLeft" ? i-1 : null;
+      if(j === null) return; e.preventDefault();
+      show(ids[(j + ids.length) % ids.length], true);
+    });
+  });
+  document.querySelectorAll("[data-go]").forEach(function(c){
+    c.addEventListener("click", function(){ show(c.dataset.go); window.scrollTo({top:0}); });
+  });
+  window.addEventListener("hashchange", function(){ show(location.hash.slice(1)); });
+  var start = location.hash.slice(1);
+  if(ids.indexOf("p-" + start) < 0){ try{ start = localStorage.getItem("workshop-tab") || "overview"; }catch(e){ start = "overview"; } }
+  show(start);
+})();
+</script>
+
+</body></html>
