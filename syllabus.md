@@ -10,7 +10,7 @@ By the end, students can explain how AI fails, verify its output, connect their 
 
 |  |  |
 | --- | --- |
-| Format | 3 weekly sessions × 3.5 hours (same weekday, three consecutive weeks); one Jetstream2 VM per student (JupyterLab, Open WebUI, hux), kept running from Day 1 until one week after Day 3 |
+| Format | 3 weekly sessions × 3.5 hours (same weekday, three consecutive weeks); one Jetstream2 VM per student (JupyterLab, Open WebUI, an AI coding harness), kept running from Day 1 until one week after Day 3 |
 | Cohort and staff | 20–25 students per session; instructor plus 1–2 TAs |
 | Prerequisites | Laptop and browser; able to run a notebook cell and edit one line of Python |
 | Resources | Explore ACCESS allocation (\~75,000 SUs); up to 26 VMs; public data only |
@@ -22,7 +22,7 @@ By the end, students can explain how AI fails, verify its output, connect their 
 | --- | --- | --- | --- |
 | 1 | How AI Works (and Where It Breaks) | 0:00 Welcome · 0:05 Warm-up · 0:20 Lecture · 0:55 Lab A: TP53 classifier · 1:50 Break · 2:00 Lab B: LLM sampling and the agent loop · 2:50 Bring your own · 3:00 Debrief · 3:20 Bridge | A classifier; a traced agent run |
 | 2 | Making Your Data Available to an LLM | 0:00 Opening · 0:15 Lecture · 0:45 Lab A: retrieval index · 1:40 Break · 1:50 Lab B: MCP server connected to Open WebUI · 2:50 Bring your own · 3:00 Debrief · 3:20 Bridge | A hybrid retrieval index; an MCP server in their own chat interface |
-| 3 | AI-Assisted Coding for Bench Scientists | 0:00 hux orientation · 0:20 Lecture · 0:50 Lab 1: plan, critique, QC · 1:40 Break · 1:50 Lab 2: DE, figures, enrichment, report · 2:45 Bring your own · 2:55 Debrief · 3:05 Appropriate AI use · 3:25 Close | A full RNA-seq analysis directed through hux |
+| 3 | AI-Assisted Coding for Bench Scientists | 0:00 Coding harness orientation · 0:20 Lecture · 0:50 Lab 1: plan, critique, QC · 1:40 Break · 1:50 Lab 2: DE, figures, enrichment, report · 2:45 Bring your own · 2:55 Debrief · 3:05 Appropriate AI use · 3:25 Close | A full RNA-seq analysis directed through an AI coding harness |
 
 Detailed schedules, the appropriate-use framework, resources, and the preparation checklist follow.
 
@@ -45,7 +45,7 @@ A three-session, hands-on workshop that makes research trainees comfortable usin
 | --- | --- |
 | Audience | Research trainees: graduate students, postdocs, and clinical residents and fellows doing research rotations. Designed for wet-lab researchers; also useful for early-stage dry-lab students. Minimal Python, no prior AI/ML experience |
 | Cohort | Planned for 20–25 students per session |
-| Format | 3 sessions × 3.5 hours, one per week on the same weekday over three consecutive weeks; Python in Jupyter notebooks, a personal Open WebUI chat interface, and the hux coding agent |
+| Format | 3 sessions × 3.5 hours, one per week on the same weekday over three consecutive weeks; Python in Jupyter notebooks, a personal Open WebUI chat interface, and an AI coding harness such as OpenCode or Codex |
 | Environment | One Jetstream2 VM per student, kept running for one week after the workshop |
 | Instructor | Marcus R. Breese, PhD, Department of Medical and Molecular Genetics, IU School of Medicine |
 
@@ -69,7 +69,7 @@ All three days use the same biology. Day 1 predicts TP53 status from gene expres
 | --- | --- | --- | --- |
 | 1 | How AI Works (and Where It Breaks) | A TP53-status classifier; a traced agent run | An intuition for how AI fails, and a habit of verifying |
 | 2 | Making Your Data Available to an LLM | A hybrid retrieval index and an MCP server, connected to their own chat interface | Their own data and tools inside a working chat app |
-| 3 | AI-Assisted Coding for Bench Scientists | A full bulk RNA-seq analysis, directed through hux | A plan template, review checklist, reproducible notebook, and AI-use disclosure |
+| 3 | AI-Assisted Coding for Bench Scientists | A full bulk RNA-seq analysis, directed through an AI coding harness | A plan template, review checklist, reproducible notebook, and AI-use disclosure |
 
 ### Design principles
 
@@ -104,7 +104,7 @@ Each student gets a VM at `vmN.class.compgenlab.org` and logs in as `studentN@cl
 | JupyterLab | Days 1–3 | Notebooks and terminal |
 | Open WebUI (student is admin) | Days 1–2 | Chat interface; students connect their own MCP servers |
 | Student MCP server (run from the command line) | Days 2–3 | The student's own tools: cell-line lookups and literature search |
-| hux coding agent | Day 3 | Directed analysis in a container |
+| AI coding harness (OpenCode or Codex) | Day 3 | Directed analysis in a container |
 | Workshop model (Jetstream-hosted) | Days 1–3 | The LLM behind every interface |
 | Workshop webapp (instructor VM) | Days 1–3 | Live polls, charts, and anonymous votes |
 
@@ -272,7 +272,7 @@ Dataset: [GSE86221](https://www.omicsdi.org/dataset/geo/GSE86221), HCT116 TP53 w
 
 | Clock | Block | Min | Mode |
 | --- | --- | --- | --- |
-| 0:00 | Opening: hux orientation and an unplanned request | 20 | Hands-on |
+| 0:00 | Opening: coding harness orientation and an unplanned request | 20 | Hands-on |
 | 0:20 | Lecture | 30 | Talk |
 | 0:50 | Lab part 1: plan, critique, QC | 50 | Solo |
 | 1:40 | Break | 10 |  |
@@ -284,7 +284,7 @@ Dataset: [GSE86221](https://www.omicsdi.org/dataset/geo/GSE86221), HCT116 TP53 w
 
 ### Opening (20 min)
 
-1. Terminal orientation (10 min): open a terminal in JupyterLab and start your Day 2 server if it isn't running; open a second terminal and start hux; where files live; how to stop the agent.
+1. Terminal orientation (10 min): open a terminal in JupyterLab and start your Day 2 server if it isn't running; open a second terminal and start the coding harness; where files live; how to stop the agent.
 2. The unplanned request (10 min): type "Analyze the RNA-seq data in `data/`" and watch. Expect plausible output that computes straight through the planted errors. Save it for the debrief.
 
 ### Lecture (30 min)
@@ -311,8 +311,8 @@ Where agents are heading (mention only, \~2 min of the 10; nothing hands-on):
 | Step | Min | Content |
 | --- | --- | --- |
 | L1 | 20 | Write the plan, no AI. Template: question, comparisons, known-answer checks (CDKN1A and MDM2 rise with nutlin in wild-type, not knockout; replicates cluster by condition; Hallmark p53 pathway enriched in wild-type only; your Day 2 predictions), figures |
-| L2 | 10 | hux critiques the plan; revise. Expect it to raise the genotype × treatment interaction |
-| L3 | 20 | QC with hux: library sizes, sample correlation, PCA. Planted errors: a DMSO/nutlin label swap (visible in PCA and in MDM2/CDKN1A), and one column of normalized values instead of raw counts (non-integers). Checkpoint: corrected counts and sample sheet |
+| L2 | 10 | The coding harness critiques the plan; revise. Expect it to raise the genotype × treatment interaction |
+| L3 | 20 | QC with the coding harness: library sizes, sample correlation, PCA. Planted errors: a DMSO/nutlin label swap (visible in PCA and in MDM2/CDKN1A), and one column of normalized values instead of raw counts (non-integers). Checkpoint: corrected counts and sample sheet |
 
 ### Lab part 2 (55 min)
 
@@ -322,7 +322,7 @@ Where agents are heading (mention only, \~2 min of the 10; nothing hands-on):
 | L5 | 10 | Figures: volcano plots, top-gene heatmap, known-target plots |
 | L6 | 10 | Enrichment: gseapy prerank against offline Hallmark gene sets |
 | L7 | 10 | Literature check in Open WebUI (your Day 2 server + paperKB): are the top wild-type-specific genes outside the Hallmark set known p53 targets? Reveal Day 2 predictions vs. actual results |
-| L8 | 10 | Report: a notebook that reruns end to end. The student writes the methods and conclusions; hux checks the methods against the code (parameters, versions, filters) and flags discrepancies |
+| L8 | 10 | Report: a notebook that reruns end to end. The student writes the methods and conclusions; the coding harness checks the methods against the code (parameters, versions, filters) and flags discrepancies |
 
 Rule for the whole lab: read each step's output and run its check before moving on. Checkpoints after every step.
 
@@ -330,7 +330,7 @@ Extension track (fast finishers and the week after): the [MIX-seq](https://pertp
 
 ### Bring your own (10 min)
 
-Draft an analysis plan for your own next experiment with the same template; hux critiques it.
+Draft an analysis plan for your own next experiment with the same template; the coding harness critiques it.
 
 ### Debrief (10 min)
 
@@ -422,7 +422,7 @@ Request steps: submit the request with a CV and this syllabus as PDF; allow 1–
 | JupyterLab | Workshop notebooks, `labagent` helpers, checkpoint files |
 | Open WebUI (latest; v0.6.31+ required for native MCP) | Workshop model preconfigured; `WEBUI_SECRET_KEY` set; code interpreter on; Docker run with `--add-host=host.docker.internal:host-gateway`; reference cell-line server pre-registered |
 | Student MCP server | No service: the student starts the server from a JupyterLab terminal (`python server.py`, port 8000). JupyterLab terminals keep running when the browser tab closes, but the server stops if the terminal is closed or the VM reboots |
-| hux | Configured to the workshop model; Docker as container runtime |
+| AI coding harness (OpenCode or Codex) | Configured to the workshop model; Docker as container runtime |
 | Python container | PyDESeq2, gseapy, scikit-learn, rank\_bm25, numpy/pandas, matplotlib/seaborn, FastMCP, a small embedding model (pre-cached weights) |
 
 ### Data
@@ -473,7 +473,7 @@ The longest lead items are the VM build and a full rehearsal on the workshop mod
 
 2 weeks before
 
-- [ ] Rehearse on 2–3 VMs: log in, run Lab A, sample in B1, build and connect a server, run the full Day 3 lab in hux
+- [ ] Rehearse on 2–3 VMs: log in, run Lab A, sample in B1, build and connect a server, run the full Day 3 lab in the coding harness
 - [ ] Pre-run the Day 2 question set under all three methods and confirm the expected accuracy pattern
 - [ ] Load-test paperKB and the workshop model with 25 concurrent clients
 
@@ -493,12 +493,12 @@ After the workshop
 | Decision | Options | Default if undecided |
 | --- | --- | --- |
 | Workshop dates and shutdown date | — | Needed for the allocation request and credentials cards |
-| Workshop model | Jetstream-hosted model vs. a stronger REALLMS model for hux on Day 3 | Jetstream model for all days, unless the Day 3 rehearsal shows unreliable tool calling |
+| Workshop model | Jetstream-hosted model vs. a stronger REALLMS model for the coding harness on Day 3 | Jetstream model for all days, unless the Day 3 rehearsal shows unreliable tool calling |
 | Logprobs for Day 1 B1 | Live from the model vs. pre-captured | Pre-captured if the model endpoint does not return logprobs |
 | Embedding model | Local small model vs. a Jetstream embedding endpoint | Local model with pre-cached weights |
 | paperKB readiness | Live MCP server vs. dropped | If not ready, drop the paperKB-only question; everything else still runs |
 | Day 3 main dataset | Bulk (GSE86221) vs. single-cell (MIX-seq) | Bulk, unless the survey shows a mostly single-cell cohort |
-| hux on the VMs | Docker runtime; job tracking without a scheduler | Confirm in rehearsal |
+| Coding harness on the VMs (OpenCode or Codex) | Docker runtime; job tracking without a scheduler | Confirm in rehearsal |
 
 ### Sources
 
