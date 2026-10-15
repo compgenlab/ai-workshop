@@ -1,20 +1,20 @@
-# AI Tools for Biomedical Research: A Hands-On Workshop
+# AI Tools for Biomedical Researchers: A Hands-On Workshop
 
 Sep 24, 2026 · @Marcus
 
 ## At a glance
 
-A three-session, hands-on workshop that makes graduate students and early-stage researchers comfortable using AI tools in biomedical research. It is designed for wet-lab researchers and also useful for early-stage dry-lab students; minimal Python is assumed. About two-thirds of each session is hands-on, and one biological thread, p53 and MDM2, runs through all three days.
+A three-session, hands-on workshop that makes research trainees (graduate students, postdocs, and clinical residents and fellows doing research rotations) comfortable using AI tools in biomedical research. It is designed for wet-lab researchers and also useful for early-stage dry-lab students; minimal Python is assumed. About two-thirds of each session is hands-on, and one biological thread, p53 and MDM2, runs through all three days.
 
 By the end, students can explain how AI fails, verify its output, connect their own data to an LLM, direct a coding agent through a full analysis, and apply rules for appropriate AI use in research.
 
 |  |  |
 | --- | --- |
-| Format | 3 sessions × 3.5 hours; one Jetstream2 VM per student (JupyterLab, Open WebUI, hux), kept running one week after |
-| Cohort and staff | 30 students; instructor plus 2–3 TAs |
+| Format | 3 weekly sessions × 3.5 hours (same weekday, three consecutive weeks); one Jetstream2 VM per student (JupyterLab, Open WebUI, hux), kept running from Day 1 until one week after Day 3 |
+| Cohort and staff | 20–25 students per session; instructor plus 1–2 TAs |
 | Prerequisites | Laptop and browser; able to run a notebook cell and edit one line of Python |
-| Resources | Explore ACCESS allocation (\~42,000 SUs); 31 VMs; public data only |
-| Dates | To be scheduled |
+| Resources | Explore ACCESS allocation (\~75,000 SUs); up to 26 VMs; public data only |
+| Dates | To be scheduled: one weekday, three consecutive weeks |
 
 ### Schedule at a glance
 
@@ -39,13 +39,13 @@ Detailed schedules, the appropriate-use framework, resources, and the preparatio
 
 ## Course summary
 
-A three-session, hands-on workshop that makes graduate wet-lab students comfortable using AI tools in their own research. About two-thirds of every session is hands-on: students learn comfort by doing.
+A three-session, hands-on workshop that makes research trainees comfortable using AI tools in their own research. About two-thirds of every session is hands-on: students learn comfort by doing.
 
 |  |  |
 | --- | --- |
-| Audience | Graduate students and early-stage researchers. Designed for wet-lab researchers; also useful for early-stage dry-lab students. Minimal Python, no prior AI/ML experience |
-| Cohort | Planned for 30 students |
-| Format | 3 sessions × 3.5 hours; Python in Jupyter notebooks, a personal Open WebUI chat interface, and the hux coding agent |
+| Audience | Research trainees: graduate students, postdocs, and clinical residents and fellows doing research rotations. Designed for wet-lab researchers; also useful for early-stage dry-lab students. Minimal Python, no prior AI/ML experience |
+| Cohort | Planned for 20–25 students per session |
+| Format | 3 sessions × 3.5 hours, one per week on the same weekday over three consecutive weeks; Python in Jupyter notebooks, a personal Open WebUI chat interface, and the hux coding agent |
 | Environment | One Jetstream2 VM per student, kept running for one week after the workshop |
 | Instructor | Marcus R. Breese, PhD, Department of Medical and Molecular Genetics, IU School of Medicine |
 
@@ -190,7 +190,7 @@ Each student names one failure they found. Close on the MDM2-amplified lines: th
 ### Bridge to Day 2 (10 min)
 
 1. Show the room's PMID results.
-2. Ask: "Same question tomorrow, but the agent can search the literature. What happens to this chart?" Students submit a predicted fabrication rate.
+2. Ask: "Same question next week, but the agent can search the literature. What happens to this chart?" Students submit a predicted fabrication rate.
 3. Remind students to bring a CSV from their lab. One-minute feedback card.
 
 ## Day 2: Making Your Data Available to an LLM
@@ -260,7 +260,7 @@ Add one tool that reads a CSV from your own lab, stop and restart the server in 
 
 ### Bridge to Day 3 (10 min)
 
-1. Tomorrow: a full RNA-seq analysis of nutlin vs. DMSO in TP53 wild-type vs. knockout cells.
+1. Next week: a full RNA-seq analysis of nutlin vs. DMSO in TP53 wild-type vs. knockout cells.
 2. Students pre-register 3 genes they expect to rise in wild-type but not knockout cells, and submit them to the webapp.
 3. Leave the server running in its JupyterLab terminal, or start it again at the beginning of Day 3. Feedback card.
 
@@ -393,7 +393,7 @@ Voting mechanics: anonymous; reveal the room's split before the answer; re-vote 
 
 ## Resources required
 
-The workshop needs one Explore ACCESS allocation (\~42,000 SUs requested), 31 Jetstream2 VMs, two to three TAs, and public datasets staged in advance.
+The workshop needs one Explore ACCESS allocation (\~75,000 SUs requested), up to 26 Jetstream2 VMs, one to two TAs, and public datasets staged in advance.
 
 ### Compute: Jetstream2 via an Explore ACCESS allocation
 
@@ -401,18 +401,18 @@ On Jetstream2, 1 ACCESS credit = 1 SU = 1 vCPU-hour. Explore allocations cover u
 
 | Item | Flavor | Count | Duration | SUs |
 | --- | --- | --- | --- | --- |
-| Student VMs | m3.quad (4 vCPU, 15 GB) | 30 | 10 days (3 workshop + 7 after) | 28,800 |
-| Instructor VM (webapp, reverse proxy, reference server) | m3.medium (8 vCPU) | 1 | 21 days | 4,032 |
+| Student VMs | m3.quad (4 vCPU, 15 GB) | 25 | 22 days (Day 1 through Day 3, then 7 after) | 52,800 |
+| Instructor VM (webapp, reverse proxy, reference server) | m3.medium (8 vCPU) | 1 | 33 days | 6,336 |
 | Rehearsal VMs | m3.quad | 3 | 3 days | 864 |
-| Total with 25% headroom |  |  |  | \~42,000 |
+| Total with 25% headroom |  |  |  | \~75,000 |
 
-Request steps: submit the request with a CV and this syllabus as PDF; allow 1–2 business days for approval; exchange credits for Jetstream2 compute; add TAs as allocation managers. Students do not need ACCESS accounts, because the instructor provisions their VMs. Upgrade the instructor VM to m3.large (+\~4,000 SUs) if paperKB also runs there.
+Request steps: submit the request with a CV and this syllabus as PDF; allow 1–2 business days for approval; exchange credits for Jetstream2 compute; add TAs as allocation managers. Students do not need ACCESS accounts, because the instructor provisions their VMs. Upgrade the instructor VM to m3.large (+\~6,300 SUs) if paperKB also runs there.
 
 ### Networking and provisioning
 
 - One public IP on the instructor VM; wildcard DNS `*.class.compgenlab.org` pointing to it; a wildcard Let's Encrypt certificate via DNS challenge.
 - The reverse proxy routes `vmN.class.compgenlab.org` to each student VM's private IP.
-- Terraform (`count = 30`) plus cloud-init builds every VM; `terraform destroy` on the shutdown date.
+- Terraform (`count = final enrollment, up to 25`) plus cloud-init builds every VM; `terraform destroy` on the shutdown date.
 - Open WebUI signup disabled; each instance's admin account is pre-created as `studentN@class.compgenlab.org` with a generated password.
 
 ### VM image contents
@@ -433,7 +433,7 @@ Request steps: submit the request with a CV and this syllabus as PDF; allow 1–
 | 1 | TP53 exon sequence | NCBI | Probe input |
 | 2 | \~300 p53/MDM2 abstracts | PubMed (open access) | Plus one planted injection abstract; prebuilt index checkpoint |
 | 2 | Cell-line annotation and curated p53 target table | DepMap and literature | Served by the student and reference servers |
-| 2–3 | Frozen literature collection | paperKB (open-access subset) | MCP over streamable HTTP; workshop keys; load test at 30 clients |
+| 2–3 | Frozen literature collection | paperKB (open-access subset) | MCP over streamable HTTP; workshop keys; load test at 25 clients |
 | 3 | Bulk RNA-seq, HCT116 TP53 WT/KO × DMSO/nutlin | [GSE86221](https://www.omicsdi.org/dataset/geo/GSE86221) | Instructor aligns and counts; planted-error version plus clean answer key |
 | 3 | MSigDB Hallmark gene sets | MSigDB | Staged offline |
 | 3 (extension) | MIX-seq idasanutlin single-cell | [pertpy / scPerturb](https://pertpy.readthedocs.io/en/latest/api/data/pertpy.data.mcfarland_2020.html) | Pre-staged AnnData with its own plan template |
@@ -441,7 +441,7 @@ Request steps: submit the request with a CV and this syllabus as PDF; allow 1–
 ### Staffing
 
 - Instructor: lectures, follow-along coding, debriefs.
-- TAs: one per 12–15 students (two to three for 30), plus an on-call contact for the week after.
+- TAs: one to two for 20–25 students, plus an on-call contact for the week after.
 
 ### Materials
 
@@ -468,24 +468,24 @@ The longest lead items are the VM build and a full rehearsal on the workshop mod
 
 - [ ] Build the VM image and Terraform/cloud-init; stand up the instructor VM, DNS, and wildcard certificate
 - [ ] Build `labagent` helpers (model calls, `submit()`, chunk/embed/BM25/search), the server scaffold, and solution files
-- [ ] Build the workshop webapp and all its views; load-test \~450 submissions in a burst
+- [ ] Build the workshop webapp and all its views; load-test \~375 submissions in a burst
 - [ ] Prepare the DepMap subset, abstract corpus, injection abstract, question set, and answer keys
 
 2 weeks before
 
 - [ ] Rehearse on 2–3 VMs: log in, run Lab A, sample in B1, build and connect a server, run the full Day 3 lab in hux
 - [ ] Pre-run the Day 2 question set under all three methods and confirm the expected accuracy pattern
-- [ ] Load-test paperKB and the workshop model with 30 concurrent clients
+- [ ] Load-test paperKB and the workshop model with 25 concurrent clients
 
 1 week before
 
-- [ ] Provision all 30 VMs; print credentials cards and the TA master sheet
+- [ ] Provision all student VMs (up to 25); print credentials cards and the TA master sheet
 - [ ] Refresh the Day 3 model list and lecture visuals
 - [ ] Re-check the NIH notices; align the handout with IU's generative AI guidance
 
 After the workshop
 
-- [ ] Daily health checks during the week after; a shared channel for problems
+- [ ] Daily health checks from Day 1 through the week after Day 3; a shared channel for problems
 - [ ] Send the shutdown reminder two days before; destroy the VMs; send the follow-up survey
 
 ### Open decisions
